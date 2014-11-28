@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<!-- Core configuration -->
+	<name>LinkBox</name>
+	<debug enable="f" level="debug"/>
+	<profiler enable="f"/>
+	<lang default="en"/>
+	<!--<deployment enable="true"/>-->
+	<timezone>UTC</timezone>
+</config>
