@@ -1,0 +1,97 @@
+<!-- Embed navbar under /fragments/navbar.html. We are keeping navbar in a separate file due to its size! -->
+<div ac-fragment="navbar" ac-condition="$._session.user.ID"></div>
+
+<!--
+	Create the main part of the page. Contents of this block change when the user clicks on any link where ac-target attribute is '#main' (<a href="fragment" ac-target="#main">link</a>). More on how links work at http://blog.asyncode.com/post/101310416802/mastering-asyncode-html5-link-extensions.
+
+'ac-showWhen' tells the framework to show the whole block only when a given condition is satisfied. Here it checks if the user is logged in, by checking app data for the value of $._session.user.ID. If it exists, the user will see Hello World!, otherwise the user will se the login screen below.
+-->
+<div id="main" class="container-fluid">
+	<div ac-showWhen="$._session.user.ID">
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Welcome to LinkBox!</h1>
+        <p>This is a simple application that lets you store a list of useful links with an optional description. To see how it was built go to <a href="#">tutorial</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+ac-showWhen again. 'not' negates the result so that the block is rendered only when the user is not logged in.
+
+The login markup comes from http://getbootstrap.com/getting-started/#examples. You can find there many other nice templates to just copy and paste into Asyncode Platform's IDE!
+
+On top of plain HTML, there is one additional Asyncode-specific <form> attribute, ac-redirect. You probably won't use it elsewhere in your apps, because it indicates total refresh of the page after a form has been successfully sent.
+-->
+<div id="login" ac-showWhen="not $._session.user.ID">
+	<form class="form-signin"
+				action="/signIn"
+				ac-redirect="/index.html">
+		<h2 class="form-signin-heading">Log in</h2>
+		<input name="email"
+           class="input-block-level"
+           type="email"
+           autofocus
+           placeholder="Email"
+           required>
+		<input name="password"
+           class="input-block-level"
+           type="password"
+           placeholder="Password"
+           required>
+		<button class="btn btn-large btn-primary btn-block" type="submit">Log in</button>
+
+		<div class="alert alert-danger ac-error EmailAddressNotVerified">
+			<i class="fa fa-warning"></i> <b>E-mail address not verified</b>
+			<p>Your e-mail address is not verified. Check your mailbox and spam folder or <a href="/user/resendVerificationEmail" ac-target="#main">resend verification e-mail</a>.</p>
+		</div>
+
+		<div class="alert alert-danger ac-error AccountNotFound">
+			<i class="fa fa-warning"></i> <b>Account not found</b>
+			<p>Register below or contact support.</p>
+		</div>
+
+	</form>
+
+	<!-- data-toggle is a bootstrap extension, more on http://getbootstrap.com/javascript/#modals. -->
+	<div style="max-width: 300px;margin: auto">
+		<a href="#" data-toggle="modal" data-target="#resetPswd">Forgot password?</a>
+	</div>
+
+	<p class="lead text-center">or</p>
+
+	<!--
+		The <a> tag behavior is extended the system is called Asyncode Link Extension (read more: http://blog.asyncode.com/post/101310416802/mastering-asyncode-html5-link-extensions) and here differs from normal HTML behavior by replacing a part of the page instead of the whole page.
+
+		After user clicks on the link, the sign in form is replaced by contents of /fragments/users/register.html.
+	-->
+	<div class="center-block" style="width: 100px;">
+		<a href="/user/register" ac-target="#main" class="btn btn-success btn-lg">Register</a>
+	</div>
+
+	<!-- Nothing new here -->
+	<div class="modal fade" id="resetPswd" tabindex="-1" role="dialog" aria-labelledby="reset parrword" aria-hidden="true">
+		<div class="modal-dialog">
+			<form action="/user/password/sendResetRequest" class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="myModalLabel">Reset password</h4>
+				</div>
+				<div class="modal-body">
+					<input name="email"
+								 class="input-block-level"
+								 type="email"
+								 placeholder="E-mail"
+								 autofocus
+								 required>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Send</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns="http://asyncode.com/View"
+	xmlns:mg="http://asyncode.com/Mongo"
+	xmlns:op="http://asyncode.com/interpreter">
+
+	<condition>$ss.loggedIn</condition>
+
+	<post>
+		<param name="url"/>
+		<param name="description"/>
+	</post>
+	
+  <set name="user"
+        command="mg:findOne"
+        mg:coll="users">
+    {
+      "_id": $ss.ID
+    }
+  </set>
+
+
+	<set name="addUrl"
+			 command="mg:insert"
+			 mg:coll="urls"
+			  >
+		{
+				"url":$.url,
+				"description":$.description,
+				"added":now(),
+				"owner":{
+				  "_id":$.user._id,
+				  "name":$.user.name,
+				}
+		}
+	</set>
+
+</view>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns="http://asyncode.com/View"
+	xmlns:mg="http://asyncode.com/Mongo"
+	xmlns:op="http://asyncode.com/Interpreter"
+	inherits="_settings_">
+
+	<condition name="isLoggedIn">$ss.loggedIn</condition>
+
+	<node name="links"
+			 command="mg:find"
+			 mg:coll="urls"
+			 mg:sort="[[added,1]]">
+		{
+		}
+	</node>
+	
+	
+</view>

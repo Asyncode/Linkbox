@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns="http://asyncode.com/View"
+			xmlns:mg="http://asyncode.com/Mongo"
+			xmlns:op="http://asyncode.com/Interpreter">
+
+	<param name="name" default="World"/>
+
+	<condition name="NotLoggedIn">$ss.loggedIn</condition>
+
+	<node name="who">Hello {$.name}!</node>
+
+	<node name="user"
+			 command="mg:findOne"
+			 mg:coll="users"
+			 mg:show="name, email">
+		{_id: $ss.ID}
+	</node>
+
+</view>

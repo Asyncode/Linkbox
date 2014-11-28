@@ -1,0 +1,42 @@
+<div class="container">
+  <h1>Your links</h1>
+  <form class="row" role="form" action="/links/add" 
+  href="/links/linksDefault"
+  ac-datasource="/links/showLinks"
+  ac-target="#main">
+    <div class="col-xs-4">
+      <label class="sr-only" for="inputUrl">Paste your link here</label>
+      <input name="url" type="url" class="form-control input-lg" id="inputUrl" placeholder="Paste your link here">
+    </div>
+    <div class="col-xs-6">
+      <label class="sr-only" for="description">Add description</label>
+      <input name="description" type="text" class="form-control input-lg" id="descritpion" placeholder="Add description">
+    </div>
+    <button type="submit" class="btn btn-success btn-lg">Add</button>
+  </form>
+</div>
+<br/>
+
+<div>
+</div>
+
+<div class="container">
+  <div class="col-xs-11">
+    <ul class="list-unstyled" ac-datapath="!.links">
+      <li>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a href="{{@.url}}" target="_blank">{{@.url}}</a>
+            <div class="pull-right">
+              <span class="badge">Added by {{@.owner.name}}</span>
+            </div>
+          </div>
+          <div class="panel-body">
+           {{@.description}}
+          </div>
+        </div>
+        
+      </li>
+    </ul>
+  </div>
+</div>
